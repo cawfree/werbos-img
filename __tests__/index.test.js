@@ -23,7 +23,7 @@ it("should be capable of reading image files", async () => {
   const app = werbos()
     .use(img())
     .use(applyLabels())
-    .use(h => h('[*]', (input) => {
+    .use(h => h((input) => {
       const [img] = input;
       console.log(JSON.stringify(img));
     }), noop());
