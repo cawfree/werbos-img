@@ -1,12 +1,14 @@
 import "@babel/polyfill";
 import "@tensorflow/tfjs-node";
 
-import werbos, { threshold, oneHot, shuffle } from "@werbos/core";
-import { print, noop } from "rippleware";
+import werbos, { threshold, oneHot, shuffle, sequential, dense, train } from "@werbos/core";
+import { print, noop, justOnce } from "rippleware";
 
 import { img } from "../src";
 
 jest.setTimeout(24* 60 * 60 * 1000);
+
+// TODO: why does shuffle break in justOnce?
 
 it("should be capable of reading image files", async () => {
 
@@ -20,16 +22,18 @@ it("should be capable of reading image files", async () => {
     [].concat(...input.map((e, i) => [...Array(e.length)].fill([i]))),
   ]);
 
-  const printer = () => h => h(t => t.print());
-    
   const app = werbos()
     .use(img({ width: 28, height: 28 }))
     .use(withLabels())
     .use(threshold(), oneHot())
-    .use(shuffle());
+    .use(shuffle())
+    .use(
+      sequential()
+        .use(dense({ units: 512 }))
+        .use(dense())
+    )
+    .use(train({ epochs: 5, batchSize: 28 }));
   
-  const a = new Date().getTime();
-
   // https://github.com/myleott/mnist_png
   const result = await app(
     [
@@ -45,6 +49,24 @@ it("should be capable of reading image files", async () => {
       '/home/cawfree/Downloads/tmp/mnist_png/training/9',
     ],
   );
+
+  const result2 = await app(
+    [
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/0',
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/1',
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/2',
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/3',
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/4',
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/5',
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/6',
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/7',
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/8',
+      '/home/cawfree/Downloads/tmp/mnist_png/testing/9',
+    ],
+  );
+
+
+  console.log(result2);
 
   expect(true)
     .toBeTruthy();
