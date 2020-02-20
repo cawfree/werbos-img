@@ -1,6 +1,8 @@
 import "@babel/polyfill";
+import "@tensorflow/tfjs-node";
 
-import compose, { print, noop } from "rippleware";
+import werbos from "@werbos/core";
+import { print, noop } from "rippleware";
 
 import { img } from "../src";
 
@@ -18,7 +20,7 @@ it("should be capable of reading image files", async () => {
     [].concat(...[].concat(...input.map((e, i) => [...Array(e.length)].fill(i)))),
   ]);
     
-  const app = compose()
+  const app = werbos()
     .use(img())
     .use(applyLabels())
     .use(noop(), print());
