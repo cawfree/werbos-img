@@ -8,8 +8,6 @@ import { img } from "../src";
 
 jest.setTimeout(24* 60 * 60 * 1000);
 
-// TODO: why does shuffle break in justOnce?
-
 it("should be capable of reading image files", async () => {
 
   // TODO: Need to understand the appropriate style for image shape
