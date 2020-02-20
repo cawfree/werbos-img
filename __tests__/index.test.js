@@ -25,24 +25,6 @@ it("should be capable of reading image files", async () => {
     ],
   );
 
-  result.forEach(
-    (e) => {
-      console.log(e.length);
-    },
-  );
-
-  //console.log(result);
-
-  //await app([
-  //  '/home/cawfree/Downloads/squiggly.png',
-  //  '/home/cawfree/Downloads/squiggly.png',
-  //  '/home/cawfree/Downloads/squiggly.png',
-  //]);
-
-  //expect(app())
-  //  .rejects
-  //  .toBeTruthy();
-  //
   expect(true)
     .toBeTruthy();
 });
