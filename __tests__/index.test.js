@@ -26,7 +26,7 @@ it("should be capable of reading image files", async () => {
     .use(img({ width: 28, height: 28 }))
     .use(withLabels())
     .use(threshold(), oneHot())
-    .use(shuffle())
+    .use(justOnce(shuffle()))
     .use(
       sequential()
         .use(dense({ units: 512 }))
