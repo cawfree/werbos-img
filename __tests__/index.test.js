@@ -23,8 +23,12 @@ it("should be capable of reading image files", async () => {
   const app = werbos()
     .use(img())
     .use(applyLabels())
-    .use(noop(), print());
+    .use(h => h('[*]', (input) => {
+      const [img] = input;
+      console.log(JSON.stringify(img));
+    }), noop());
   
+  // https://github.com/myleott/mnist_png
   const result = await app(
     [
       '/home/cawfree/Downloads/tmp/mnist_png/training/0',
