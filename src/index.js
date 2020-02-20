@@ -5,8 +5,8 @@ import { sep } from "path";
 
 const defaultOptions = Object
   .freeze({
-    width: 64,
-    height: 64,
+    width: null,
+    height: null,
   });
 
 const isDirectory = e => typeCheck('String', e) && lstatSync(e).isDirectory();
@@ -18,6 +18,11 @@ const isFiles = e => Array.isArray(e) && e.length > 0 && e.reduce((r, f) => (r &
 
 const openFiles = (opts, input, hooks) => {
   const { width, height } = opts;
+  if (!Number.isInteger(width) || width <= 0) {
+    return Promise.reject(new Error(`Expected positive integer width, but encountered ${width}.`));
+  } else if (!Number.isInteger(height) || height <= 0) {
+    return Promise.reject(new Error(`Expected positive integer height, but encountered ${height}.`));
+  }
   // TODO: need to enforce that all images have the same aspect ratio
   return input
     .reduce(
@@ -27,11 +32,10 @@ const openFiles = (opts, input, hooks) => {
             .resolve(
               sharp(path)
                 .resize(width, height)
-                .threshold()
                 .raw()
                 .toBuffer(),
             )
-            .then((scaledImage) => (images.push(scaledImage) && undefined) || images),
+            .then(buf => (images.push([...buf]) && undefined) || images),
         ),
       Promise.resolve([]),
     );
