@@ -2,7 +2,7 @@ import "@babel/polyfill";
 import "@tensorflow/tfjs-node";
 
 import werbos, { threshold, oneHot, shuffle, sequential, dense, train } from "@werbos/core";
-import { print, noop, justOnce } from "rippleware";
+import { justOnce } from "rippleware";
 
 import { img } from "../src";
 
@@ -15,15 +15,17 @@ it("should be capable of reading image files", async () => {
   //       be compatible with jimp and sharp
 
   // TODO: Need to throw on invalid aspect ratio
-  const withLabels = () => h => h('[*]', input => [
-    [].concat(...input),
-    [].concat(...input.map((e, i) => [...Array(e.length)].fill([i]))),
-  ]);
+  const withLabels = () => [
+    ['[*]', input => [
+      [].concat(...input),
+      [].concat(...input.map((e, i) => [...Array(e.length)].fill([i]))),
+    ]],
+  ];
 
   const app = werbos()
     .use(img({ width: 28, height: 28 }))
-    .use(withLabels())
-    .use(threshold(), oneHot())
+    .sep(withLabels())
+    .mix(threshold(), oneHot())
     .use(justOnce(shuffle()))
     .use(
       sequential()
@@ -37,14 +39,14 @@ it("should be capable of reading image files", async () => {
     [
       '/home/cawfree/Downloads/tmp/mnist_png/training/0',
       '/home/cawfree/Downloads/tmp/mnist_png/training/1',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/2',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/3',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/4',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/5',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/6',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/7',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/8',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/9',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/2',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/3',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/4',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/5',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/6',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/7',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/8',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/9',
     ],
   );
 
@@ -52,14 +54,14 @@ it("should be capable of reading image files", async () => {
     [
       '/home/cawfree/Downloads/tmp/mnist_png/testing/0',
       '/home/cawfree/Downloads/tmp/mnist_png/testing/1',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/2',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/3',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/4',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/5',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/6',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/7',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/8',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/9',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/2',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/3',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/4',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/5',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/6',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/7',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/8',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/9',
     ],
   );
 

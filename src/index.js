@@ -54,12 +54,12 @@ const openDirectories = (opts, inputs, hooks) => Promise
   );
   
 // TODO: Register using global state!
-export const img = (options = defaultOptions) => (handle) => {
+export const img = (options = defaultOptions) => {
   const opts = { ...defaultOptions, ...options };
   return [
-    handle(isDirectory, (input, hooks) => openDirectories(opts, [input], hooks)),
-    handle(isDirectories, (input, hooks) => openDirectories(opts, input, hooks)),
-    handle(isFile, (input, hooks) => openFiles(opts, [input], hooks)),
-    handle(isFiles, (input, hooks) => openFiles(opts, input, hooks)),
-  ] && undefined;
+    [isDirectory, (input, hooks) => openDirectories(opts, [input], hooks)],
+    [isDirectories, (input, hooks) => openDirectories(opts, input, hooks)],
+    [isFile, (input, hooks) => openFiles(opts, [input], hooks)],
+    [isFiles, (input, hooks) => openFiles(opts, input, hooks)],
+  ];
 };
