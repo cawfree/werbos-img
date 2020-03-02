@@ -3,11 +3,15 @@ import { typeCheck } from "type-check";
 import { existsSync, lstatSync, readdirSync } from "fs";
 import { sep } from "path";
 
+import { Meta } from "@werbos/core";
+
 const defaultOptions = Object
-  .freeze({
-    width: null,
-    height: null,
-  });
+  .freeze(
+    {
+      width: null,
+      height: null,
+    },
+  );
 
 const isDirectory = e => typeCheck('String', e) && lstatSync(e).isDirectory();
 const isDirectories = e => Array.isArray(e) && e.length > 0 && e.reduce((r, f) => r && isDirectory(f), true);
@@ -16,14 +20,26 @@ const isFile = e => typeCheck('String', e) && existsSync(e);
 
 const isFiles = e => Array.isArray(e) && e.length > 0 && e.reduce((r, f) => (r && isFile(f)), true);
 
+const toBuffer = img => new Promise(
+  (resolve, reject) => img
+    .toBuffer(
+      (err, buf, info) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve([buf, info]);
+      },
+    ),
+);
+
 const openFiles = (opts, input, hooks) => {
+  const { useMeta } = hooks;
   const { width, height } = opts;
   if (!Number.isInteger(width) || width <= 0) {
     return Promise.reject(new Error(`Expected positive integer width, but encountered ${width}.`));
   } else if (!Number.isInteger(height) || height <= 0) {
     return Promise.reject(new Error(`Expected positive integer height, but encountered ${height}.`));
   }
-  // TODO: need to enforce that all images have the same aspect ratio
   return input
     .reduce(
       (p, path, i) => p
@@ -32,10 +48,13 @@ const openFiles = (opts, input, hooks) => {
             .resolve(
               sharp(path)
                 .resize(width, height)
-                .raw()
-                .toBuffer(),
+                .flatten()
+                .raw(),
             )
-            .then(buf => (images.push([...buf]) && undefined) || images),
+            .then(toBuffer)
+            .then(([buf]) => (images.push([...buf]) && undefined) || images)
+            // TODO: This channel information is potentially incorrect dependent upon the input data.
+            .then(data => useMeta({ ...useMeta(), [Meta.Transform]: { channels: 3 } }) || data),
         ),
       Promise.resolve([]),
     );

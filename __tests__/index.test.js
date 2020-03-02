@@ -10,6 +10,11 @@ jest.setTimeout(24* 60 * 60 * 1000);
 
 it("should be capable of reading image files", async () => {
 
+  //const app = werbos()
+  //  .use(img({ width: 28, height: 28 }));
+
+  //await app('/home/cawfree/Downloads/logo.png');
+
   // TODO: Need to understand the appropriate style for image shape
   //       try to create something homogeneous which would effectively
   //       be compatible with jimp and sharp
@@ -49,6 +54,8 @@ it("should be capable of reading image files", async () => {
       //'/home/cawfree/Downloads/tmp/mnist_png/training/9',
     ],
   );
+
+  console.log(result);
 
   const result2 = await app(
     [
