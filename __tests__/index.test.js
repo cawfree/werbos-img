@@ -30,14 +30,14 @@ it("should be capable of reading image files", async () => {
   const app = werbos()
     .use(img({ width: 28, height: 28 }))
     .sep(withLabels())
-    .mix(threshold(), oneHot())
-    .use(justOnce(shuffle()))
-    .use(
-      sequential()
-        .use(dense({ units: 512 }))
-        .use(dense())
-    )
-    .use(train({ epochs: 5, batchSize: 28 }));
+    //.mix(threshold(), oneHot())
+    //.use(justOnce(shuffle()))
+    //.use(
+    //  sequential()
+    //    .use(dense({ units: 512 }))
+    //    .use(dense())
+    //)
+    //.use(train({ epochs: 5, batchSize: 28 }));
   
   // https://github.com/myleott/mnist_png
   const result = await app(
@@ -57,23 +57,22 @@ it("should be capable of reading image files", async () => {
 
   console.log(result);
 
-  const result2 = await app(
-    [
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/0',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/1',
-      //'/home/cawfree/Downloads/tmp/mnist_png/testing/2',
-      //'/home/cawfree/Downloads/tmp/mnist_png/testing/3',
-      //'/home/cawfree/Downloads/tmp/mnist_png/testing/4',
-      //'/home/cawfree/Downloads/tmp/mnist_png/testing/5',
-      //'/home/cawfree/Downloads/tmp/mnist_png/testing/6',
-      //'/home/cawfree/Downloads/tmp/mnist_png/testing/7',
-      //'/home/cawfree/Downloads/tmp/mnist_png/testing/8',
-      //'/home/cawfree/Downloads/tmp/mnist_png/testing/9',
-    ],
-  );
+  //const result2 = await app(
+  //  [
+  //    '/home/cawfree/Downloads/tmp/mnist_png/testing/0',
+  //    '/home/cawfree/Downloads/tmp/mnist_png/testing/1',
+  //    //'/home/cawfree/Downloads/tmp/mnist_png/testing/2',
+  //    //'/home/cawfree/Downloads/tmp/mnist_png/testing/3',
+  //    //'/home/cawfree/Downloads/tmp/mnist_png/testing/4',
+  //    //'/home/cawfree/Downloads/tmp/mnist_png/testing/5',
+  //    //'/home/cawfree/Downloads/tmp/mnist_png/testing/6',
+  //    //'/home/cawfree/Downloads/tmp/mnist_png/testing/7',
+  //    //'/home/cawfree/Downloads/tmp/mnist_png/testing/8',
+  //    //'/home/cawfree/Downloads/tmp/mnist_png/testing/9',
+  //  ],
+  //);
 
-
-  console.log(result2);
+  //console.log(result2);
 
   expect(true)
     .toBeTruthy();

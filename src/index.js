@@ -50,7 +50,9 @@ const openFiles = (opts, input, hooks) => {
                 .raw(),
             )
             .then(toBuffer)
-            .then(([buf]) => (images.push([...buf]) && undefined) || images)
+            .then(([buf]) => buf),
+            // implicitly converts to data; let's use  the buffer
+            //.then(([buf]) => (images.push([...buf]) && undefined) || images)
             //// TODO: This channel information is potentially incorrect dependent upon the input data.
             //.then(data => useMeta({ ...useMeta(), [Meta.Transform]: { channels: 3 } }) || data),
         ),
