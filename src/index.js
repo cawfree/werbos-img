@@ -3,8 +3,6 @@ import { typeCheck } from "type-check";
 import { existsSync, lstatSync, readdirSync } from "fs";
 import { sep } from "path";
 
-import { Meta } from "@werbos/core";
-
 const defaultOptions = Object
   .freeze(
     {
@@ -53,8 +51,8 @@ const openFiles = (opts, input, hooks) => {
             )
             .then(toBuffer)
             .then(([buf]) => (images.push([...buf]) && undefined) || images)
-            // TODO: This channel information is potentially incorrect dependent upon the input data.
-            .then(data => useMeta({ ...useMeta(), [Meta.Transform]: { channels: 3 } }) || data),
+            //// TODO: This channel information is potentially incorrect dependent upon the input data.
+            //.then(data => useMeta({ ...useMeta(), [Meta.Transform]: { channels: 3 } }) || data),
         ),
       Promise.resolve([]),
     );
