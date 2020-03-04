@@ -3,7 +3,7 @@ import "@tensorflow/tfjs-node";
 
 import { typeCheck } from "type-check";
 import werbos, { threshold, oneHot, shuffle, sequential, dense, train } from "@werbos/core";
-import { justOnce } from "rippleware";
+import { justOnce, noop } from "rippleware";
 
 import { img } from "../src";
 
@@ -11,25 +11,27 @@ jest.setTimeout(24* 60 * 60 * 1000);
 
 it("should be capable of reading image files", async () => {
 
-    // TODO: Need to understand the appropriate style for image shape
+  // TODO: Need to understand the appropriate style for image shape
   //       try to create something homogeneous which would effectively
-  //       be compatible with jimp and sharp
+  //       be compatible with jimp and sharp.
 
-  //// TODO: Need to throw on invalid aspect ratio
-  //const withLabels = () => [
-  //  ['[*]', input => [
-  //    [].concat(...input),
-  //    [].concat(...input.map((e, i) => [...Array(e.length)].fill([i]))),
-  //  ]],
-  //];
+  // TODO: Needs proper evaluation of path data.
+  const withLabels = () => [
+    ['[*]', input => [
+      [].concat(...input),
+      [].concat(...input.map((e, i) => [...Array(e.length)].fill([i]))),
+    ]],
+  ];
 
   const app = werbos()
     .use(img({ width: 28, height: 28 }))
+    .sep(withLabels())
+    .use(threshold(), noop());
   // 2352 / (28*28) = channels! (each byte represents data)
   // beefier data (i.e. bigger channels will require a higher representation
   // this is why we should be using specific types
 
-    .use(threshold());
+    //.use(threshold());
     //.use(
     //  [
     //    ['[Buffer]', (e) => console.log('dude, got here')],
@@ -39,7 +41,7 @@ it("should be capable of reading image files", async () => {
     //  (_, { useMeta }) => console.log(JSON.stringify(useMeta())),
     //);
 
-  const [[x]] = await app(
+  const res = await app(
     [
       '/home/cawfree/Downloads/tmp/mnist_png/training/0',
       '/home/cawfree/Downloads/tmp/mnist_png/training/1',
@@ -47,9 +49,8 @@ it("should be capable of reading image files", async () => {
     ],
   );
 
-  console.log(x);
-  console.log([...x].length);
-    
+  console.log(res);
+
     //.mix(threshold(), oneHot())
     //.use(justOnce(shuffle()))
     //.use(
