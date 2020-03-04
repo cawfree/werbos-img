@@ -29,7 +29,7 @@ it("should be capable of reading image files", async () => {
   // beefier data (i.e. bigger channels will require a higher representation
   // this is why we should be using specific types
 
-    //.use(threshold());
+    .use(threshold());
     //.use(
     //  [
     //    ['[Buffer]', (e) => console.log('dude, got here')],
@@ -41,9 +41,9 @@ it("should be capable of reading image files", async () => {
 
   const [[x]] = await app(
     [
-      //'/home/cawfree/Downloads/tmp/mnist_png/training/0',
-      //'/home/cawfree/Downloads/tmp/mnist_png/training/1',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/1/1230.png',
+      '/home/cawfree/Downloads/tmp/mnist_png/training/0',
+      '/home/cawfree/Downloads/tmp/mnist_png/training/1',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/1/1230.png',
     ],
   );
 
