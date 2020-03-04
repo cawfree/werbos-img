@@ -16,16 +16,20 @@ it("should be capable of reading image files", async () => {
   //       be compatible with jimp and sharp
 
   //// TODO: Need to throw on invalid aspect ratio
-  const withLabels = () => [
-    ['[*]', input => [
-      [].concat(...input),
-      [].concat(...input.map((e, i) => [...Array(e.length)].fill([i]))),
-    ]],
-  ];
+  //const withLabels = () => [
+  //  ['[*]', input => [
+  //    [].concat(...input),
+  //    [].concat(...input.map((e, i) => [...Array(e.length)].fill([i]))),
+  //  ]],
+  //];
 
   const app = werbos()
     .use(img({ width: 28, height: 28 }))
-    .use(threshold());
+  // 2352 / (28*28) = channels! (each byte represents data)
+  // beefier data (i.e. bigger channels will require a higher representation
+  // this is why we should be using specific types
+
+    //.use(threshold());
     //.use(
     //  [
     //    ['[Buffer]', (e) => console.log('dude, got here')],
@@ -35,13 +39,16 @@ it("should be capable of reading image files", async () => {
     //  (_, { useMeta }) => console.log(JSON.stringify(useMeta())),
     //);
 
-  await app(
+  const [[x]] = await app(
     [
-      '/home/cawfree/Downloads/tmp/mnist_png/training/0',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/1',
-      //'/home/cawfree/Downloads/tmp/mnist_png/training/1/1230.png',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/0',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/1',
+      '/home/cawfree/Downloads/tmp/mnist_png/training/1/1230.png',
     ],
   );
+
+  console.log(x);
+  console.log([...x].length);
     
     //.mix(threshold(), oneHot())
     //.use(justOnce(shuffle()))

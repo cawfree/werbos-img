@@ -128,12 +128,11 @@ const persistChannelMeta = (useMeta, width, height, channels) => {
 
 // XXX: Returns the appropriate result data alongside
 //      the required meta for buffer data.
-const forwardResults = (results, { useMeta, useMatcher }) => {
-  const typeCheck = useMatcher();
-  if (typeCheck(`([Buffer],${imageInfoShape})`, results)) {
+const forwardResults = (results, { useMeta }) => {
+  if (typeCheck(`([Uint8Array],${imageInfoShape})`, results)) {
     const [bufs, { width, height, channels }] = results;
     return persistChannelMeta(useMeta, width, height, channels) || bufs;
-  } else if (`[([Buffer], ${imageInfoShape})]`, results) {
+  } else if (`[([Uint8Array], ${imageInfoShape})]`, results) {
     const { length } = results;
     for (let i = 1; i < length; i += 1) {
       throwOnImageInfoMismatch(results[i], results[i - 1]);
@@ -144,7 +143,7 @@ const forwardResults = (results, { useMeta, useMatcher }) => {
       .map(([buf]) => buf);
     return persistChannelMeta(useMeta, width, height, channels) || bufs;
   }
-  throw new Error(`💥 It looks you might be comparing collections of images against a singular image source, and it is not possible to create tensors based on such a combination. If you believe this may be a bug, please file an issue at https://github.com/cawfree/werbos-img/issues.`);
+  throw new Error(`💥 It looks you might be comparing collections of images against a singular image source, and it is not possible to create tensors based on such a combination. Alternatively, you might be using larger image data than what can be expressed using unsigned bytes, for example, high definition image data. If you believe this may be a bug, please file an issue at https://github.com/cawfree/werbos-img/issues.`);
 };
   
 // TODO: Register using global state!
