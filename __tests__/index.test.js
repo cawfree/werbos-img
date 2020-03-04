@@ -49,7 +49,7 @@ it("should be capable of reading image files", async () => {
     ],
   );
 
-  console.log(res);
+  console.log(res[0][0].shape);
 
     //.mix(threshold(), oneHot())
     //.use(justOnce(shuffle()))
