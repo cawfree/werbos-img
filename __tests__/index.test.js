@@ -16,15 +16,16 @@ it("should be capable of reading image files", async () => {
   //       be compatible with jimp and sharp
 
   //// TODO: Need to throw on invalid aspect ratio
-  //const withLabels = () => [
-  //  ['[*]', input => [
-  //    [].concat(...input),
-  //    [].concat(...input.map((e, i) => [...Array(e.length)].fill([i]))),
-  //  ]],
-  //];
+  const withLabels = () => [
+    ['[*]', input => [
+      [].concat(...input),
+      [].concat(...input.map((e, i) => [...Array(e.length)].fill([i]))),
+    ]],
+  ];
 
   const app = werbos()
     .use(img({ width: 28, height: 28 }))
+    .use(threshold());
     //.use(
     //  [
     //    ['[Buffer]', (e) => console.log('dude, got here')],
@@ -36,13 +37,12 @@ it("should be capable of reading image files", async () => {
 
   await app(
     [
-      //'/home/cawfree/Downloads/tmp/mnist_png/training/0',
-      //'/home/cawfree/Downloads/tmp/mnist_png/training/1',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/1/1230.png',
+      '/home/cawfree/Downloads/tmp/mnist_png/training/0',
+      '/home/cawfree/Downloads/tmp/mnist_png/training/1',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/1/1230.png',
     ],
   );
     
-    //.sep(withLabels())
     //.mix(threshold(), oneHot())
     //.use(justOnce(shuffle()))
     //.use(
