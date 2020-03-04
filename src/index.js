@@ -2,6 +2,7 @@ import sharp from "sharp";
 import { typeCheck } from "type-check";
 import { existsSync, lstatSync, readdirSync } from "fs";
 import { sep } from "path";
+import { Meta } from "@werbos/core";
 
 const imageInfoShape = '{channels:Number,width:Number,height:Number}';
 
@@ -116,7 +117,7 @@ const persistChannelMeta = (useMeta, width, height, channels) => {
   return useMeta(
     {
       ...useMeta(),
-      ['somewhere']: {
+      [Meta.Transform]: {
         width,
         height,
         channels,

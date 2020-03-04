@@ -25,14 +25,14 @@ it("should be capable of reading image files", async () => {
 
   const app = werbos()
     .use(img({ width: 28, height: 28 }))
-    .use(
-      [
-        ['[Buffer]', (e) => console.log('dude, got here')],
-      ],
-    )
-    .use(
-      (_, { useMeta }) => console.log(JSON.stringify(useMeta())),
-    );
+    //.use(
+    //  [
+    //    ['[Buffer]', (e) => console.log('dude, got here')],
+    //  ],
+    //);
+    //.use(
+    //  (_, { useMeta }) => console.log(JSON.stringify(useMeta())),
+    //);
 
   await app(
     [
