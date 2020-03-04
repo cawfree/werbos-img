@@ -26,11 +26,11 @@ it("should be capable of reading image files", async () => {
   const app = werbos()
     .use(img({ width: 28, height: 28 }))
     .sep(withLabels())
-    .mix(threshold(), oneHot());
-    //.use(
-    //  sequential()
-    //    .use(conv2d()),
-    //);
+    .mix(threshold(), oneHot())
+    .use(
+      sequential()
+        .use(conv2d()),
+    );
 
   const res = await app(
     [
@@ -39,7 +39,9 @@ it("should be capable of reading image files", async () => {
     ],
   );
 
-  console.log(res[0][0].shape);
+  console.log(res);
+
+  //console.log(res[0][0].shape);
 
   expect(true)
     .toBeTruthy();
