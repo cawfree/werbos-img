@@ -1199,7 +1199,7 @@
     otsu "^0.0.5"
     redux "^4.0.5"
     redux-thunk "^2.3.0"
-    rippleware "^0.2.0-alpha.14"
+    rippleware "^0.2.0-alpha.21"
     stats-lite "^2.2.0"
     tfjs-clone "^0.0.1"
     type-check "^0.3.2"
@@ -4549,10 +4549,10 @@ rimraf@^3.0.0:
   dependencies:
     glob "^7.1.3"
 
-rippleware@^0.2.0-alpha.14:
-  version "0.2.0-alpha.14"
-  resolved "https://registry.yarnpkg.com/rippleware/-/rippleware-0.2.0-alpha.14.tgz#7ddff3fe50eccf9e86a7a04281293a626d41d1ca"
-  integrity sha512-1qs81j7a6rlevVBhY6W21ffcWMzCsLjQAtTZs8Yotptkf4AAiykAeiC26bGFRbVH2ZR8f8UVGD0Zh6Zc/GYohg==
+rippleware@^0.2.0-alpha.21:
+  version "0.2.0-alpha.21"
+  resolved "https://registry.yarnpkg.com/rippleware/-/rippleware-0.2.0-alpha.21.tgz#d2b2147cff00dd0964a1354af9bd5efa12c8b020"
+  integrity sha512-Q5wJN6oUN9tN6if4D2hYqT3g/cedcBmkVzCD29XPKNQXglrhWY/Ba/okzxagdI4HjfhrmLb8+WIR58oIWWNpYQ==
   dependencies:
     deep-equal "^2.0.1"
     jsonpath "^1.0.2"
