@@ -8,7 +8,7 @@ import werbos, {
   sequential,
   dense,
   train,
-  conv2d,
+  conv,
   pooling,
   flatten,
 } from "@werbos/core";
@@ -37,11 +37,11 @@ it("should be capable of reading image files", async () => {
     .mix(threshold(), oneHot())
     .use(
       sequential()
-        .use(conv2d({ filters: 32, kernelSize: 3 }))
+        .use(conv({ filters: 32, kernelSize: 3 }))
         .use(pooling({ kernelSize: 2 }))
-        .use(conv2d({ filters: 64, kernelSize: 3 }))
+        .use(conv({ filters: 64, kernelSize: 3 }))
         .use(pooling({ kernelSize: 2 }))
-        .use(conv2d({ filters: 64, kernelSize: 3 }))
+        .use(conv({ filters: 64, kernelSize: 3 }))
         .use(flatten())
         .use(dense({ units: 64 }))
         .use(dense()),
