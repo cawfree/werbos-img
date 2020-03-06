@@ -38,9 +38,9 @@ it("should be capable of reading image files", async () => {
     .use(
       sequential()
         .use(conv({ filters: 32, kernelSize: 3 }))
-        .use(pooling({ kernelSize: 2 }))
+        .use(pooling())
         .use(conv({ filters: 64, kernelSize: 3 }))
-        .use(pooling({ kernelSize: 2 }))
+        .use(pooling())
         .use(conv({ filters: 64, kernelSize: 3 }))
         .use(flatten())
         .use(dense({ units: 64 }))
