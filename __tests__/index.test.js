@@ -11,6 +11,7 @@ import werbos, {
   conv,
   pooling,
   flatten,
+  shuffle,
 } from "@werbos/core";
 import { justOnce, noop } from "rippleware";
 
@@ -35,6 +36,7 @@ it("should be capable of reading image files", async () => {
     .use(img({ width: 28, height: 28 }))
     .sep(withLabels())
     .mix(threshold(), oneHot())
+    .use(justOnce(shuffle()))
     .use(
       sequential()
         .use(conv({ filters: 32, kernelSize: 3 }))
@@ -52,14 +54,14 @@ it("should be capable of reading image files", async () => {
     [
       '/home/cawfree/Downloads/tmp/mnist_png/training/0',
       '/home/cawfree/Downloads/tmp/mnist_png/training/1',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/2',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/3',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/4',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/5',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/6',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/7',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/8',
-      '/home/cawfree/Downloads/tmp/mnist_png/training/9',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/2',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/3',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/4',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/5',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/6',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/7',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/8',
+      //'/home/cawfree/Downloads/tmp/mnist_png/training/9',
     ],
   );
 
@@ -67,14 +69,14 @@ it("should be capable of reading image files", async () => {
     [
       '/home/cawfree/Downloads/tmp/mnist_png/testing/0',
       '/home/cawfree/Downloads/tmp/mnist_png/testing/1',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/2',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/3',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/4',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/5',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/6',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/7',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/8',
-      '/home/cawfree/Downloads/tmp/mnist_png/testing/9',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/2',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/3',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/4',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/5',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/6',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/7',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/8',
+      //'/home/cawfree/Downloads/tmp/mnist_png/testing/9',
     ]
   );
 
