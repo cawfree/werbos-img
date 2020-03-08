@@ -17,10 +17,9 @@ import { justOnce, noop } from "rippleware";
 
 import { img } from "../src";
 
-//jest.setTimeout(24* 60 * 60 * 1000);
-//
-//it("should be capable of training against the raw dogs-vs-cats (kaggle) dataset", async () => {
-(async () => {
+jest.setTimeout(24* 60 * 60 * 1000);
+
+it("should be capable of training against the raw dogs-vs-cats (kaggle) dataset", async () => {
   const withLabels = () => [
     ['[*]', input => [
       [].concat(...input),
@@ -29,22 +28,23 @@ import { img } from "../src";
   ];
 
   const app = werbos()
-    .use(img({ width: 150, height: 150 }))  
+    .use(img({ width: 28, height: 28 }))  
     .sep(withLabels())
     .mix(threshold(), oneHot())
+    .use(justOnce(shuffle()))
     .use(
       sequential()
+        .use(conv({ filters: 32, kernelSize: 3}))
+        .use(pooling())
         .use(conv({ filters: 64, kernelSize: 3}))
         .use(pooling())
-        .use(conv({ filters: 128, kernelSize: 3}))
-        .use(pooling())
-        .use(conv({ filters: 128, kernelSize: 3}))
+        .use(conv({ filters: 64, kernelSize: 3}))
         .use(pooling())
         .use(flatten())
-        .use(dense({ units: 512 }))
+        .use(dense({ units: 64 }))
         .use(dense())
     )
-    .use(train({ epochs: 3, batchSize: 256 }));
+    .use(train({ epochs: 3, batchSize: 64 }));
 
   // would be nice to have the raw paths...
   const x = await app(
@@ -56,9 +56,17 @@ import { img } from "../src";
 
   console.log(x);
 
+  const y = await app(
+    [
+      '/home/cawfree/Development/dogs-vs-cats/train/dogs',
+      '/home/cawfree/Development/dogs-vs-cats/train/cats',
+    ],
+  );
+
+  console.log(y);
+
   console.log('done');
-})();
-//});
+});
 
 //it("should be capable of training against the raw png mnist dataset", async () => {
 //

@@ -16,7 +16,6 @@
     "jimp"
   ],
   "scripts": {
-    "start": "node_modules/.bin/babel-node __tests__/index.test",
     "build": "babel src --out-dir dist && uglifyjs dist/*.js -o dist/*.js",
     "prettify": "yarn prettier --write \"**/*.js\"",
     "test": "jest"
