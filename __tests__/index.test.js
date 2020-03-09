@@ -37,7 +37,6 @@ it("should be capable of training against the raw dogs-vs-cats (kaggle) dataset"
         .use(conv({ filters: 32, kernelSize: 3}))
         .use(conv({ filters: 64, kernelSize: 3}))
         .use(conv({ filters: 64, kernelSize: 3}))
-        .use(flatten())
         .use(dense({ units: 64 }))
         .use(dense())
     )
