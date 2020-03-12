@@ -29,7 +29,7 @@ it("should be capable of training against the raw dogs-vs-cats (kaggle) dataset"
 
   const app = werbos()
     .use(img({ width: 28, height: 28 }))  
-    .sep(withLabels())
+    .all(withLabels())
     .mix(threshold(), oneHot())
     .use(justOnce(shuffle()))
     .use(
